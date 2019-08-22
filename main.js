@@ -2,7 +2,48 @@
 const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
-// Your JavaScript code goes here!
+
+
+const error = document.getElementById("modal")
+error.style.visibility = "hidden"
+
+function liker(){
+  let hearts = document.getElementsByClassName("like-glyph")
+  for (let heart of hearts) {
+    heart.addEventListener("click", function(e){
+      mimicServerCall()
+        .then(response => {
+          if (e.target.innerText == EMPTY_HEART){
+          e.target.innerHTML = `
+          <span class="like-glyph activated-heart">
+          ${FULL_HEART}
+          </span>
+          `
+          ;
+          }
+          else {
+            e.target.innerHTML = `
+            <span class="like-glyph">
+            ${EMPTY_HEART}
+            </span>
+            `
+          }
+        })
+        .catch(error => {error.style.visibility = "visible";
+        error.innerText = `
+        ${error.message}
+        `
+        ;
+        setTimeout(function(){
+          error.style.visibility = "hidden"}, 5000);
+        })
+      })
+    }
+  }
+  
+liker()
+
+
 
 
 
